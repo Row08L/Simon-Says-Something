@@ -18,12 +18,12 @@ namespace SimonSays
 
         private void GameOverScreen_Load(object sender, EventArgs e)
         {
-            //TODO: show the length of the pattern
+            lengthLabel.Text = (GameScreen.turnNumber - 1) + "";
         }
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            //TODO: close this screen and open the MenuScreen
+            Application.Exit();
         }
     }
 }
