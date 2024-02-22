@@ -296,12 +296,12 @@ namespace SimonSays
             string number = "";
             for (int i = 0; i < compColors.Count; i++)
             {
-                number += " _ ";
+                number += "_";
 
             }
             for (int i = 0; i < playerColors.Count; i++)
             {
-                number = number.Substring(0, i) + " * " + number.Substring(i + 1);
+                number = number.Substring(0, i) + "*" + number.Substring(i + 1);
             }
             SizeF textSize = e.Graphics.MeasureString(number, drawFont);
             GcolorGame.DrawString(number, drawFont, drawBrushWhite, new PointF((this.Width /2) - textSize.Width / 2, this.Height - (textSize.Height + 10)));
