@@ -10,9 +10,18 @@ using System.Media;
 using System.Drawing.Drawing2D;
 using System.Threading;
 using System.Diagnostics;
-
 namespace SimonSays
 {
+//  ____  _                         ____                  
+// / ___|(_) _ __ ___   ___ _ __   / ___|  __ _ _ _ ___ 
+// \___ \| | '_ ` _ \ / _ \| '_ \  \___ \ / _` | | | / __|
+//  ___) | | | | | | | (_) | | | |  ___) | (_| | |_| \__ \
+// |____/|_|_| |_| |_|\___/|_| |_| |____/ \__,_|\__, |___/
+//                                              |___/
+//                                              
+//
+
+
     public partial class GameScreen : UserControl
     {
         SoundPlayer blueSound = new SoundPlayer(Properties.Resources.blue);
@@ -35,12 +44,10 @@ namespace SimonSays
         bool spaceKeyDown = false;
         Font drawFont = new Font("Arial", 16);
         SolidBrush drawBrushWhite = new SolidBrush(Color.White);
-
         public GameScreen()
         {
             InitializeComponent();
         }
-
         private void GameScreen_Load(object sender, EventArgs e)
         {
             greenButton.TabStop = false;
@@ -54,7 +61,6 @@ namespace SimonSays
             Thread.Sleep(500);
             ComputerTurn();
         }
-
         private void ComputerTurn()
         {
             this.ActiveControl = null;
@@ -107,11 +113,10 @@ namespace SimonSays
             antiBuffer.Restart();
             this.ActiveControl = null;
         }
-
-        private void Button_Click(object sender, EventArgs e)
+        private void Button_Click(object sender, EventArgs e) // Button event that handles all button click events
         {
-            this.ActiveControl = null;
-            if (playerControls == true && antiBuffer.Elapsed.TotalMilliseconds > 20)
+            this.ActiveControl = null; //Gets rid of focus on buttons
+            if (playerControls == true && antiBuffer.Elapsed.TotalMilliseconds > 20) //It's in the name, stops beffered button presses from going through into main code
             {
                 Button clickedButton = sender as Button;
                 bool right = false;
@@ -142,6 +147,7 @@ namespace SimonSays
                         right = Comparer(playerColors, compColors);
                         break;
                 }
+                // sends player to game over screen if they make an inccorect button press
                 if (right == false)
                 {
                     mistakeSound.Play();
@@ -154,13 +160,13 @@ namespace SimonSays
                 if (numberOfCorrectGuesses == turnNumber)
                 {
                     turnNumber++;
+                    Refresh();
                     playerControls = false;
                     ComputerTurn();
                 }
             }
         }
-
-        void Reset()
+        void Reset() //Turns all buttons back to original color
         {
             redButton.BackColor = Color.DarkRed;
             blueButton.BackColor = Color.DarkBlue;
@@ -168,7 +174,9 @@ namespace SimonSays
             greenButton.BackColor = Color.ForestGreen;
             Refresh();
         }
-        static bool Comparer (List<int> playerColorList, List<int> compColorList)
+
+
+        static bool Comparer (List<int> playerColorList, List<int> compColorList) // compares 2 lists and returns true if they are the same
         {
             bool a = true;
             int count = 0;
@@ -185,15 +193,6 @@ namespace SimonSays
             }
             return a;
         }
-
-        public void GameOver()
-        {
-            //TODO: Play a game over sound
-
-            //TODO: close this screen and open the GameOverScreen
-
-        }
-
         void ShowColors (List<int> colors)
         {
             playerControls = false;
@@ -256,7 +255,6 @@ namespace SimonSays
                     break;
             }
         }
-
         private void GameScreen_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -272,7 +270,6 @@ namespace SimonSays
                     break;
             }
         }
-
         private void ticks_Tick(object sender, EventArgs e)
         {
             if(spaceKeyDown == true)
@@ -282,14 +279,8 @@ namespace SimonSays
             
             Refresh();
         }
-
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            //greenButton.Visible = false;
-            //redButton.Visible = false;
-            //yellowButton.Visible = false;
-            //blueButton.Visible = false;
-
             Bitmap colorGame = new Bitmap(this.Width, this.Height);
             Graphics GcolorGame = this.CreateGraphics();
             GcolorGame = Graphics.FromImage(colorGame);
